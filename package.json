@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.71.4",
+    "react-native-ble-manager": "^8.8.0",
     "react-native-thermal-receipt-printer": "^1.2.0-rc.1"
   },
   "devDependencies": {

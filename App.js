@@ -1,44 +1,55 @@
-import { useState, useEffect } from "react";
-import { ScrollView, Text, TouchableOpacity, PermissionsAndroid, KeyboardAvoidingView, TextInput } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, Button, PermissionsAndroid, TouchableOpacity, TextInput, ScrollView, SafeAreaView } from "react-native";
+import BleManager from "react-native-ble-manager";
 import { BLEPrinter } from "react-native-thermal-receipt-printer";
-
-const _connectPrinter = (printer, callback) => {
-  BLEPrinter.connectPrinter(printer.inner_mac_address).then(console.log).catch(console.warn);
-}
 
 export default function App() {
 
-  const [printers, setPrinters] = useState([]);
-  const [currentPrinter, setCurrentPrinter] = useState();
-  const [string, setString] = useState("");
+  const [isReady, setIsReady] = useState(false);
+  const [devices, setDevices] = useState([]);
+  const [connected, setConnected] = useState(null);
+  const [inp, setInp] = useState("");
+
+  function logPer() {
+    BleManager.getDiscoveredPeripherals().then(setDevices);
+  }
 
   useEffect(() => {
-    PermissionsAndroid.requestMultiple(["android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT"]);
-    BLEPrinter.init().then(()=> {
-      BLEPrinter.getDeviceList().then(setPrinters);
-    });
-  }, []);
+    if (!isReady) { 
+      PermissionsAndroid.requestMultiple(["android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT", "android.permission.BLUETOOTH_ADVERTISE", "android.permission.ACCESS_FINE_LOCATION"]).then(console.log)
+      Promise.all([BleManager.start(), BLEPrinter.init()]).then(() => setIsReady(true)); 
+      return; 
+    }
+    BleManager.scan([], 300, true).then((a) => console.log(a, "Scanning"));
+  }, [isReady]);
 
   return (
-    <ScrollView style={{ padding: 24 }}>
-      {
-        printers.map(printer => (
-          <TouchableOpacity style={{ padding: 12, backgroundColor: "#fff1", marginVertical: 6 }} key={printer.inner_mac_address} onPress={() => _connectPrinter(printer, setCurrentPrinter)}>
-            <Text>Device Name: {printer.device_name}</Text>
-            <Text>MAC: {printer.inner_mac_address}</Text>
+    <SafeAreaView>
+      <Text>
+        Started Scan
+      </Text>
+      <Button onPress={logPer} title="List devices" />
+      <ScrollView>
+        {devices.map((dev, idx) => (
+          <TouchableOpacity key={idx} style={{ padding: 8, marginVertical: 6, backgroundColor: "#0002" }} onPress={() => {
+            BleManager.createBond(dev.id).then(() => {
+              BLEPrinter.connectPrinter(dev.id).then(setConnected)
+            })
+          }}>
+            <Text>{dev.name}</Text>
+            <Text>{dev.id}</Text>
           </TouchableOpacity>
-          ))
-      }
-
-      <Text style={{ marginTop: 20 }} >{currentPrinter?.inner_mac_address} {currentPrinter?.device_name}</Text>
-
-        <TextInput value={string} onChangeText={setString} style={{ padding: 12, backgroundColor: "#ddd", color: "#000" }} />
-
-      <TouchableOpacity style={{ marginTop: 50, padding: 12, backgroundColor: "#111" }} onPress={() => {
-        BLEPrinter.printText(string);
-      }}>
-        <Text>Print</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        ))}
+      </ScrollView>
+      <Text>Connected Printer: {connected ? `${connected.device_name} ${connected.inner_mac_address} ` : "None"}</Text>
+      {connected && (
+        <>
+        <TextInput value={inp} onChangeText={setInp} placeholder="Enter text to print" />
+        <Button title="Print" onPress={() => {
+          BLEPrinter.printText(inp);
+        }} />
+        </>
+      )}
+    </SafeAreaView>
   )
 }
