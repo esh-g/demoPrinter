@@ -37,6 +37,10 @@
     </dict>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>For bluetooth</string>
+    <key>NSLocationUsageDescription</key>
+    <string>GPS data is required to...</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Please allow BLE</string>
     <key>NSBluetoothAlwaysUsageDescription</key>
     <string>Please BLUE</string>
     <key>UILaunchStoryboardName</key>
