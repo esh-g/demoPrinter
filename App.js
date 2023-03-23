@@ -11,6 +11,7 @@ export default function App() {
   const [inp, setInp] = useState("");
 
   function logPer() {
+    BleManager.getDiscoveredPeripherals().then(console.log)
     BleManager.getDiscoveredPeripherals().then(setDevices);
   }
 
@@ -20,7 +21,7 @@ export default function App() {
       Promise.all([BleManager.start(), BLEPrinter.init()]).then(() => setIsReady(true)); 
       return; 
     }
-    BleManager.scan([], 300, true).then((a) => console.log(a, "Scanning"));
+    BleManager.scan([], 300, true).then(() => console.log("Scanning"));
   }, [isReady]);
 
   return (
