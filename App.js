@@ -30,7 +30,7 @@ export default function App() {
         Started Scan
       </Text>
       <Button onPress={logPer} title="List devices" />
-      <ScrollView>
+      <ScrollView style={{ height: 400, width: "100%" }}>
         {devices.map((dev, idx) => (
           <TouchableOpacity key={idx} style={{ padding: 8, marginVertical: 6, backgroundColor: "#0002" }} onPress={() => {
             BleManager.createBond(dev.id).then(() => {
