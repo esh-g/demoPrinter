@@ -3,6 +3,7 @@ import { View, Text, Button, PermissionsAndroid, TouchableOpacity, TextInput, Sc
 import BleManager from "react-native-ble-manager";
 import { BLEPrinter } from "react-native-thermal-receipt-printer";
 
+
 export default function App() {
 
   const [isReady, setIsReady] = useState(false);
@@ -11,7 +12,7 @@ export default function App() {
   const [inp, setInp] = useState("");
 
   function logPer() {
-    BleManager.getDiscoveredPeripherals().then(console.log)
+    BleManager.getDiscoveredPeripherals().then(console.log);
     BleManager.getDiscoveredPeripherals().then(setDevices);
   }
 
@@ -32,9 +33,11 @@ export default function App() {
       <Button onPress={logPer} title="List devices" />
       <ScrollView style={{ height: 400, width: "100%" }}>
         {devices.map((dev, idx) => (
-          <TouchableOpacity key={idx} style={{ padding: 8, marginVertical: 6, backgroundColor: "#0002" }} onPress={() => {
-            BleManager.createBond(dev.id).then(() => {
-              BLEPrinter.connectPrinter(dev.id).then(setConnected)
+          <TouchableOpacity key={idx} style={{ padding: 8, marginVertical: 6, backgroundColor: "#fca" }} onPress={() => {
+            console.log(dev);
+            BLEPrinter.getDeviceList().then(console.log);
+            BleManager.connect(dev.id).finally(() => {
+              BLEPrinter.connectPrinter(dev.id).then(setConnected);
             })
           }}>
             <Text>{dev.name}</Text>
@@ -45,6 +48,7 @@ export default function App() {
       <Text>Connected Printer: {connected ? `${connected.device_name} ${connected.inner_mac_address} ` : "None"}</Text>
       {connected && (
         <>
+        {console.log("AAA", connected)}
         <TextInput value={inp} onChangeText={setInp} placeholder="Enter text to print" />
         <Button title="Print" onPress={() => {
           BLEPrinter.printText(inp);

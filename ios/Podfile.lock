@@ -15,7 +15,6 @@ PODS:
     - hermes-engine/Pre-built (= 0.71.4)
   - hermes-engine/Pre-built (0.71.4)
   - libevent (2.1.12)
-  - MultiplatformBleAdapter (0.1.9)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -269,9 +268,6 @@ PODS:
     - glog
   - react-native-ble-manager (8.8.0):
     - React-Core
-  - react-native-ble-plx (2.0.3):
-    - MultiplatformBleAdapter (= 0.1.9)
-    - React-Core
   - react-native-thermal-receipt-printer (1.2.0-rc.1):
     - React
   - React-perflogger (0.71.4)
@@ -384,7 +380,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-ble-manager (from `../node_modules/react-native-ble-manager`)
-  - react-native-ble-plx (from `../node_modules/react-native-ble-plx`)
   - react-native-thermal-receipt-printer (from `../node_modules/react-native-thermal-receipt-printer`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -405,7 +400,6 @@ SPEC REPOS:
   trunk:
     - fmt
     - libevent
-    - MultiplatformBleAdapter
 
 EXTERNAL SOURCES:
   boost:
@@ -450,8 +444,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-ble-manager:
     :path: "../node_modules/react-native-ble-manager"
-  react-native-ble-plx:
-    :path: "../node_modules/react-native-ble-plx"
   react-native-thermal-receipt-printer:
     :path: "../node_modules/react-native-thermal-receipt-printer"
   React-perflogger:
@@ -492,7 +484,6 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: a1f157c49ea579c28b0296bda8530e980c45bdb3
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 5a024fdf458fa8c0d82fc262e76f982d4dcdecdd
   RCTTypeSafety: b6c253064466411c6810b45f66bc1e43ce0c54ba
@@ -508,7 +499,6 @@ SPEC CHECKSUMS:
   React-jsinspector: 1f51e775819199d3fe9410e69ee8d4c4161c7b06
   React-logger: 0d58569ec51d30d1792c5e86a8e3b78d24b582c6
   react-native-ble-manager: f8add48474ad08a0bd3e46b2d1ebff5e00a628b7
-  react-native-ble-plx: f10240444452dfb2d2a13a0e4f58d7783e92d76e
   react-native-thermal-receipt-printer: 60d46bff0e7871c2caba8b0df9f2143d15e5f699
   React-perflogger: 0bb0522a12e058f6eb69d888bc16f40c16c4b907
   React-RCTActionSheet: bfd675a10f06a18728ea15d82082d48f228a213a
